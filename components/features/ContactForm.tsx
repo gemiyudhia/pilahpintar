@@ -18,7 +18,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-// 1. Definisikan Schema Validasi (Aturan Main)
 const formSchema = z.object({
   username: z.string().min(2, {
     message: "Nama harus memiliki minimal 2 karakter.",
@@ -34,7 +33,6 @@ const formSchema = z.object({
 export default function ContactForm() {
   const [isLoading, setIsLoading] = useState(false);
 
-  // 2. Inisialisasi Form dengan React Hook Form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,22 +42,20 @@ export default function ContactForm() {
     },
   });
 
-  // 3. Fungsi yang jalan KALAU validasi sukses
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
 
-    // Simulasi kirim data (bisa dilihat di Console browser)
     console.log(values);
 
     setTimeout(() => {
       setIsLoading(false);
       alert("Pesan Terkirim! Cek console untuk lihat datanya.");
-      form.reset(); // Kosongkan form setelah kirim
+      form.reset();
     }, 2000);
   }
 
   return (
-    <section className="py-16 bg-white" id="contact">
+    <section className="py-20 bg-gray-50" id="contact">
       <div className="container mx-auto px-4 max-w-2xl">
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
@@ -71,10 +67,8 @@ export default function ContactForm() {
         </div>
 
         <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100 shadow-sm">
-          {/* Komponen FORM Shadcn */}
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              {/* Field Nama */}
               <FormField
                 control={form.control}
                 name="username"
@@ -90,12 +84,11 @@ export default function ContactForm() {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage /> {/* Ini tempat pesan error muncul */}
+                    <FormMessage />
                   </FormItem>
                 )}
               />
 
-              {/* Field Email */}
               <FormField
                 control={form.control}
                 name="email"
@@ -116,7 +109,6 @@ export default function ContactForm() {
                 )}
               />
 
-              {/* Field Pesan */}
               <FormField
                 control={form.control}
                 name="message"

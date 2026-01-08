@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
+import Navbar from "@/components/layout/navbar/Navbar";
 import Footer from "@/components/layout/Footer";
 
 const poppins = Poppins({
@@ -22,10 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${poppins.className} antialiased`}
-      >
+    <html className="scroll-smooth" lang="en">
+      <body className={`${poppins.className} antialiased`}>
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />
