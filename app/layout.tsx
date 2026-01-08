@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -9,7 +10,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "PilahSampah - sistem rekomendasi daur ulang",
+  title: "PilahPintar - sistem rekomendasi daur ulang",
   description:
     "Sistem Deteksi Untuk Memberikan Rekomendasi Daur Ulang Sampah Berbasis Machine Learning",
   icons: "favicon.ico",
@@ -23,10 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} antialiased container mx-auto px-5`}
+        className={`${poppins.className} antialiased`}
       >
         <Navbar />
-        {children}
+        <main className="min-h-screen">{children}</main>
+        <Footer />
       </body>
     </html>
   );
