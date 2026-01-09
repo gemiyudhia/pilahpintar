@@ -14,7 +14,7 @@ export default function DesktopMenu() {
           {link.name}
         </Link>
       ))}
-      <Link href="#contact">
+      <Link href="/#contact">
         <Button className="px-5 py-2.5 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-all cursor-pointer">
           Hubungi Kami
         </Button>

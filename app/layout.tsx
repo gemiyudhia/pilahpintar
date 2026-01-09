@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/navbar/Navbar";
-import Footer from "@/components/layout/Footer";
+// Import ClientLayout yang baru dibuat
+import ClientLayout from "@/components/layout/ClientLayout";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -24,9 +24,8 @@ export default function RootLayout({
   return (
     <html className="scroll-smooth" lang="en">
       <body className={`${poppins.className} antialiased`}>
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        {/* Gunakan ClientLayout sebagai pembungkus */}
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
