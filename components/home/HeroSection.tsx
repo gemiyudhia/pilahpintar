@@ -17,13 +17,13 @@ export default function HeroSection() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <Link href="#" className="w-full sm:w-auto">
-              <Button className="w-full px-8 py-6 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg text-lg">
+            <Link href="/detect" className="w-full sm:w-auto">
+              <Button className="w-full px-8 py-6 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg text-lg cursor-pointer">
                 Mulai Deteksi
               </Button>
             </Link>
-            <Link href="#" className="w-full sm:w-auto">
-              <Button className="w-full px-8 py-6 border-gray-200 border-2 hover:bg-gray-50 text-gray-700 font-bold rounded-xl shadow-sm text-lg bg-white">
+            <Link href="#how-it-works" className="w-full sm:w-auto">
+              <Button className="w-full px-8 py-6 border-gray-200 border-2 hover:bg-gray-50 text-gray-700 font-bold rounded-xl shadow-sm text-lg bg-white cursor-pointer">
                 Cara Kerja
               </Button>
             </Link>

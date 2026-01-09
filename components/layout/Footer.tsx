@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Facebook, Instagram, Twitter } from "lucide-react";
 import Image from "next/image";
+import { NAV_LINKS } from "./navbar/nav-data";
 
 export default function Footer() {
   return (
@@ -29,18 +30,16 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-3 md:col-start-7">
             <h3 className="text-white font-bold text-lg mb-4">Navigasi</h3>
             <ul className="space-y-3 text-sm">
-              {["Beranda", "Tentang Kami", "Cara Kerja", "Hubungi Kami"].map(
-                (item, idx) => (
-                  <li key={idx}>
-                    <Link
-                      href={`#${item.toLowerCase().replace(" ", "-")}`}
-                      className="hover:text-green-400 transition-colors"
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                )
-              )}
+              {NAV_LINKS.map((item, idx) => (
+                <li key={idx}>
+                  <Link
+                    href={`${item.href.replace(" ", "-")}`}
+                    className="hover:text-green-400 transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

@@ -15,8 +15,8 @@ export default function HowItWorksSection() {
             <p className="text-gray-500 mb-8">
               Teknologi canggih yang mudah digunakan siapa saja.
             </p>
-            <Link href="detect">
-              <Button className="hidden lg:block px-8 py-4 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition-all shadow-lg hover:shadow-green-500/30">
+            <Link href="/detect">
+              <Button className="hidden lg:block px-8 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition-all shadow-lg hover:shadow-green-500/30 cursor-pointer">
                 Coba Sekarang
               </Button>
             </Link>
@@ -28,11 +28,11 @@ export default function HowItWorksSection() {
                 key={index}
                 className="flex items-start gap-6 group bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-all border border-transparent hover:border-green-100"
               >
-                <div className="shrink-0 w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center shadow-sm group-hover:bg-green-600 group-hover:text-white transition-colors">
+                <div className="shrink-0 w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center shadow-sm -600 group-hover:text-white">
                   {step.icon}
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-green-700 transition-colors">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">
                     {step.title}
                   </h3>
                   <p className="text-gray-600 leading-relaxed">
@@ -42,7 +42,7 @@ export default function HowItWorksSection() {
               </div>
             ))}
 
-            <Link href="detect">
+            <Link href="/detect">
               <Button className="w-full lg:hidden mt-8 px-6 py-4 bg-green-600 text-white font-bold rounded-xl shadow-lg">
                 Coba Sekarang
               </Button>

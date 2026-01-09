@@ -131,7 +131,7 @@ export default function ContactForm() {
 
               <Button
                 type="submit"
-                className="w-full bg-green-600 hover:bg-green-700 font-bold h-11"
+                className="w-full bg-green-600 hover:bg-green-700 font-bold h-11 cursor-pointer"
                 disabled={isLoading}
               >
                 {isLoading ? (
