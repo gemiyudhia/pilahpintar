@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ModeToggle } from "./ModeToggle";
 import { ImageUploader } from "./ImageUploader";
 import { ResultSummary } from "./ResultSummary";
-import { Header } from "./Header";
+import {Header} from "./HeaderDetection"
 
 export function DetectionClient() {
   // --- STATE ---
