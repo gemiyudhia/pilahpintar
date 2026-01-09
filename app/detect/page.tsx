@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { DetectionClient } from "@/components/detection/detection-client";
+import { DetectionClient } from "@/components/detection/DetectionClient";
 
 export const metadata: Metadata = {
   title: "Deteksi Sampah | PilahPintar",

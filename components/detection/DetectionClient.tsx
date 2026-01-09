@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { ScanLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Header } from "./header";
-import { ModeToggle } from "./mode-toggle";
-import { ImageUploader } from "./image-uploader";
-import { ResultSummary } from "./result-summary";
+import { ModeToggle } from "./ModeToggle";
+import { ImageUploader } from "./ImageUploader";
+import { ResultSummary } from "./ResultSummary";
+import { Header } from "./Header";
 
 export function DetectionClient() {
   // --- STATE ---

@@ -1,11 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { DUMMY_DATA } from "@/lib/dummy-data";
 
-import { ResultHeader } from "@/components/detection/result-header";
-import { ImageDisplay } from "@/components/detection/image-display";
-import { InfoDetails } from "@/components/detection/info-details";
-import { RecommendationList } from "@/components/detection/recommendation-list";
-import { ActionButton } from "@/components/detection/action-button";
+import { ResultHeader } from "@/components/detection/ResultHeader";
+import { ImageDisplay } from "@/components/detection/ImageDisplay";
+import { InfoDetails } from "@/components/detection/InfoDetails";
+import { RecommendationList } from "@/components/detection/RecommendationList";
+import { ActionButton } from "@/components/detection/ActionButton";
 
 interface PageProps {
   params: Promise<{ id: string }>;
