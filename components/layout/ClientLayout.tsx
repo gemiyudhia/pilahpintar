@@ -12,7 +12,12 @@ export default function ClientLayout({
   const pathname = usePathname();
 
   // Daftar halaman yang TIDAK ingin menampilkan Navbar & Footer
-  const disableNavbarFooter = ["/login", "/register"];
+  const disableNavbarFooter = [
+    "/login",
+    "/register",
+    "/admin/dashboard",
+    "/admin/recommendations",
+  ];
 
   // Cek apakah pathname saat ini ada di daftar disable
   // Jika path adalah "/login", hasilnya true
