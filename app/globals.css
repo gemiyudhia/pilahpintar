@@ -115,6 +115,18 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@keyframes scan {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.animate-scan {
+  animation: scan 2s linear infinite;
+  box-shadow: 0 0 10px #22c55e;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -5,7 +5,7 @@ import { NAV_LINKS } from "./navbar/nav-data";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800 mt-20">
+    <footer className="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-12 gap-8 md:gap-12 mb-12">
           <div className="col-span-2 md:col-span-5 space-y-4">
