@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Loader2 } from "lucide-react";
+import { Loader2, AlertCircle } from "lucide-react"; // Tambah icon AlertCircle
+import { signIn } from "next-auth/react"; // 1. IMPORT PENTING
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,12 +19,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Alert, AlertDescription } from "@/components/ui/alert"; // Opsional: jika ada komponen Alert
 import Image from "next/image";
 
-// 1. Definisikan Schema Validasi dengan Zod
+// 2. Update Schema: Gunakan email agar sesuai standar login NextAuth
 const formSchema = z.object({
-  username: z.string().min(1, {
-    message: "Username wajib diisi.",
+  email: z.string().email({
+    message: "Format email tidak valid.",
   }),
   password: z.string().min(1, {
     message: "Password wajib diisi.",
@@ -33,33 +35,47 @@ const formSchema = z.object({
 export function LoginForm() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(""); // 3. State untuk error login
 
-  // 2. Inisialisasi Form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
 
-  // 3. Handler Submit
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
+    setError(""); // Reset error sebelum request baru
 
-    console.log(values); // Cek data di console
+    try {
+      // 4. Integrasi NextAuth
+      const res = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false, // Kita handle redirect manual biar smooth
+      });
 
-    // Simulasi Login
-    setTimeout(() => {
+      if (res?.error) {
+        // Jika gagal (email/pass salah)
+        setError("Email atau password salah. Silakan coba lagi.");
+        setIsLoading(false);
+      } else {
+        // Jika sukses
+        router.push("/admin/dashboard"); // Arahkan ke dashboard
+        router.refresh(); // Refresh agar session server ter-update
+      }
+    } catch (error) {
+      setError("Terjadi kesalahan pada server.");
       setIsLoading(false);
-      router.push("/admin/dashboard");
-    }, 2000);
+    }
   }
 
   return (
     <Card className="w-full max-w-sm border-2 border-gray-100 shadow-xl rounded-2xl bg-white">
       <CardHeader className="text-center pb-2 pt-10">
-        <CardTitle className="text-3xl font-bold text-gray-900 flex justify-center items-center">
+        <CardTitle className="text-3xl font-bold text-gray-900 flex flex-col gap-4 justify-center items-center">
           <Image
             src="/favicon.ico"
             alt="logo aplikasi"
@@ -72,18 +88,26 @@ export function LoginForm() {
       <CardContent className="p-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Field Username */}
+            {/* 5. Tampilkan Pesan Error Jika Ada */}
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg flex items-center gap-2 text-sm">
+                <AlertCircle className="h-4 w-4" />
+                <p>{error}</p>
+              </div>
+            )}
+
+            {/* Field Email */}
             <FormField
               control={form.control}
-              name="username"
+              name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="font-semibold text-gray-700">
-                    Username
+                    Email
                   </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Masukkan username"
+                      placeholder="user@pilahpintar.com"
                       className="h-11 rounded-lg focus-visible:ring-green-500"
                       {...field}
                     />
@@ -105,7 +129,7 @@ export function LoginForm() {
                   <FormControl>
                     <Input
                       type="password"
-                      placeholder="Masukkan password"
+                      placeholder="••••••"
                       className="h-11 rounded-lg focus-visible:ring-green-500"
                       {...field}
                     />
@@ -131,6 +155,11 @@ export function LoginForm() {
                   "Masuk"
                 )}
               </Button>
+            </div>
+
+            {/* Hint akun demo (Opsional) */}
+            <div className="text-center text-xs text-gray-400">
+              Demo: user@pilahsampah.com / 123456
             </div>
           </form>
         </Form>

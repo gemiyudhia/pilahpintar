@@ -10,6 +10,7 @@ import {
   Trash2,
 } from "lucide-react";
 import Image from "next/image";
+import LogoutButton from "../button/LogoutButton";
 
 const MENU_ITEMS = [
   { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
@@ -62,10 +63,7 @@ export function AdminSidebar() {
 
       {/* Logout Button */}
       <div className="p-4 border-t">
-        <button className="flex items-center gap-3 w-full px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-          <LogOut className="w-5 h-5" />
-          Keluar
-        </button>
+        <LogoutButton />
       </div>
     </div>
   );

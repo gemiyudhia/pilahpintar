@@ -1,9 +1,19 @@
-import { WasteChart } from "@/components/admin/WasteChart";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { WasteDistributionChart } from "@/components/admin/WasteDistributionChart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, ScanLine, FileBox, ArrowUpRight } from "lucide-react";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  // Ambil session di server
+  const session = await getServerSession(authOptions);
+
+  // Jika session null (belum login), tendang (Double protection selain middleware)
+  if (!session) {
+    redirect("/login");
+  }
+
   return (
     <div className="space-y-6">
       {/* 1. KARTU STATISTIK (Tetap sama) */}
