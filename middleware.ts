@@ -11,16 +11,6 @@ export async function middleware(req: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  // LIHAT HASIL INI DI TERMINAL VS CODE (Bukan Browser)
-  console.log("---------------------------------");
-  console.log("Akses Path:", path);
-  console.log("Status Token:", token ? "ADA TOKEN" : "TOKEN NULL (KOSONG)");
-  console.log(
-    "Secret yang dipakai:",
-    process.env.NEXTAUTH_SECRET ? "ADA" : "TIDAK ADA"
-  );
-  console.log("---------------------------------");
-
   // Logic Redirect
   if (path === "/login" && token) {
     return NextResponse.redirect(new URL("/admin/dashboard", req.url));

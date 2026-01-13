@@ -9,7 +9,7 @@ export default function LogoutButton() {
       variant="destructive"
       onClick={() => signOut({ callbackUrl: "/login" })}
     >
-      Keluar (Logout)
+      Keluar
     </Button>
   );
 }

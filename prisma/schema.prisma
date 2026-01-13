@@ -1,0 +1,57 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// 1. Admin
+model Admin {
+  id_admin    Int      @id @default(autoincrement())
+  username    String   @unique @db.VarChar(50)
+  password    String   @db.VarChar(255) 
+
+  @@map("admin")
+}
+
+// 2. Kategori (SUDAH DISEDERHANAKAN)
+model Kategori {
+  id_kategori    Int      @id @default(autoincrement())
+  label_kelas    String   @unique @db.VarChar(255) 
+  nama_alias     String   @db.VarChar(255)
+  jenis_material String   @db.VarChar(255)
+  nilai_jual     Decimal? @db.Decimal(10, 2)
+  
+  rekomendasi    Rekomendasi? 
+  log_riwayat    LogRiwayat[]
+
+  @@map("kategori")
+}
+
+// 3. Rekomendasi
+model Rekomendasi {
+  id_rekomendasi Int      @id @default(autoincrement())
+  isi_konten         String   @db.Text 
+  
+  id_kategori    Int      @unique
+  kategori       Kategori @relation(fields: [id_kategori], references: [id_kategori], onDelete: Cascade)
+
+  @@map("rekomendasi")
+}
+
+// 4. Log_Riwayat
+model LogRiwayat {
+  id_riwayat    Int      @id @default(autoincrement())
+  lokasi_gambar String   @db.VarChar(255)
+  skor_akurasi  Float    @db.Float
+  waktu_deteksi DateTime @default(now())
+  
+  id_kategori   Int
+  kategori      Kategori @relation(fields: [id_kategori], references: [id_kategori])
+
+  @@map("log_riwayat")
+}

@@ -2,13 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  LayoutDashboard,
-  FileText,
-  History,
-  LogOut,
-  Trash2,
-} from "lucide-react";
+import { LayoutDashboard, FileText, History } from "lucide-react";
 import Image from "next/image";
 import LogoutButton from "../button/LogoutButton";
 
@@ -16,10 +10,10 @@ const MENU_ITEMS = [
   { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   {
     name: "Manajemen Rekomendasi",
-    href: "/admin/recommendations",
+    href: "/admin/dashboard/recommendations",
     icon: FileText,
   },
-  { name: "Riwayat Deteksi", href: "/admin/history", icon: History },
+  { name: "Riwayat Deteksi", href: "/admin/dashboard/history", icon: History },
 ];
 
 export function AdminSidebar() {

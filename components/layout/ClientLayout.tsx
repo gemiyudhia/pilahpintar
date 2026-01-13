@@ -1,4 +1,4 @@
-"use client"; // Wajib gunakan ini karena kita pakai hooks
+"use client";
 
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/layout/navbar/Navbar";
@@ -11,27 +11,32 @@ export default function ClientLayout({
 }) {
   const pathname = usePathname();
 
-  // Daftar halaman yang TIDAK ingin menampilkan Navbar & Footer
-  const disableNavbarFooter = [
-    "/login",
-    "/register",
-    "/admin/dashboard",
-    "/admin/recommendations",
-  ];
+  // 1. Logika Exact Match (Cocok Sempurna)
+  // Gunakan ini untuk halaman statis seperti Login/Register
+  const exactDisabledRoutes = ["/login", "/register"];
+  const isAuthPage = exactDisabledRoutes.includes(pathname);
 
-  // Cek apakah pathname saat ini ada di daftar disable
-  // Jika path adalah "/login", hasilnya true
-  const isDisabled = disableNavbarFooter.includes(pathname);
+  // 2. Logika Prefix Match (Awalan)
+  // Gunakan ini untuk Route Dinamis (semua yang ada di dalam folder admin dashboard)
+  // Ini akan menangkap:
+  // - /admin/dashboard
+  // - /admin/dashboard/create
+  // - /admin/dashboard/123 (Edit)
+  // - /admin/dashboard/settings/profile
+  const isAdminPage = pathname.startsWith("/admin/dashboard");
+
+  // Gabungkan kedua logika
+  const shouldHideNavbarFooter = isAuthPage || isAdminPage;
 
   return (
     <>
-      {/* Tampilkan Navbar jika TIDAK disabled */}
-      {!isDisabled && <Navbar />}
+      {/* Tampilkan Navbar jika TIDAK disembunyikan */}
+      {!shouldHideNavbarFooter && <Navbar />}
 
       <main className="min-h-screen">{children}</main>
 
-      {/* Tampilkan Footer jika TIDAK disabled */}
-      {!isDisabled && <Footer />}
+      {/* Tampilkan Footer jika TIDAK disembunyikan */}
+      {!shouldHideNavbarFooter && <Footer />}
     </>
   );
 }
