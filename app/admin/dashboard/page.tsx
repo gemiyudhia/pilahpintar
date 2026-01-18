@@ -78,7 +78,9 @@ export default async function DashboardPage() {
   // =========================================
   const categoryDetails = await prisma.kategori.findMany({
     where: {
-      id_kategori: { in: topCategoriesStats.map((i) => i.id_kategori) },
+      id_kategori: {
+        in: topCategoriesStats.map((i) => i.id_kategori) as number[],
+      },
     },
   });
 
