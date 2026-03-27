@@ -21,7 +21,6 @@ export function AdminSidebar() {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Logo Area */}
       <div className="h-16 flex items-center px-6 border-b">
         <div className="flex items-center gap-2 font-bold text-xl text-green-700">
           <Image
@@ -34,7 +33,6 @@ export function AdminSidebar() {
         </div>
       </div>
 
-      {/* Navigation Menu */}
       <nav className="flex-1 py-6 px-3 space-y-1">
         {MENU_ITEMS.map((item) => {
           const isActive = pathname === item.href;
@@ -55,7 +53,6 @@ export function AdminSidebar() {
         })}
       </nav>
 
-      {/* Logout Button */}
       <div className="p-4 border-t">
         <LogoutButton />
       </div>

@@ -23,20 +23,16 @@ export default function ImageUploader({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
-  const [showCamera, setShowCamera] = useState(false);
-  const [cameraLoading, setCameraLoading] = useState(false); // State loading kamera
+  const [showCamera, setShowCamera] = useState<boolean>(false);
+  const [cameraLoading, setCameraLoading] = useState<boolean>(false);
   const [cameraError, setCameraError] = useState<string | null>(null);
 
-  // --- PERBAIKAN UTAMA: LOGIKA KAMERA ---
-
-  // 1. Cleanup saat komponen unmount
   useEffect(() => {
     return () => {
       stopTracks();
     };
   }, []);
 
-  // 2. Trigger nyalakan kamera SAAT showCamera bernilai true
   useEffect(() => {
     if (showCamera) {
       initializeCamera();
@@ -56,10 +52,9 @@ export default function ImageUploader({
     setCameraLoading(true);
     setCameraError(null);
     try {
-      // Minta akses kamera (prioritas kamera belakang/environment untuk scan sampah)
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
-          facingMode: "environment", // Ubah ke "environment" untuk kamera belakang HP
+          facingMode: "environment",
           width: { ideal: 1280 },
           height: { ideal: 720 },
         },
@@ -67,10 +62,8 @@ export default function ImageUploader({
 
       streamRef.current = stream;
 
-      // Pasang stream ke video element
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        // Tunggu metadata video siap sebelum play (menghindari error di iOS)
         videoRef.current.onloadedmetadata = () => {
           videoRef.current?.play();
           setCameraLoading(false);
@@ -85,12 +78,10 @@ export default function ImageUploader({
     }
   };
 
-  // Fungsi untuk membuka modal
   const openCameraModal = () => {
     setShowCamera(true);
   };
 
-  // Fungsi tutup modal
   const closeCameraModal = () => {
     setShowCamera(false);
     setCameraError(null);
@@ -105,14 +96,11 @@ export default function ImageUploader({
 
     if (!context) return;
 
-    // Set ukuran canvas sesuai video asli
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
-    // Gambar frame video ke canvas
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    // Convert ke file
     canvas.toBlob(
       (blob) => {
         if (blob) {
@@ -120,15 +108,13 @@ export default function ImageUploader({
             type: "image/jpeg",
           });
           onFileSelect(file);
-          closeCameraModal(); // Tutup modal setelah foto
+          closeCameraModal();
         }
       },
       "image/jpeg",
       0.9
     );
   };
-
-  // --- HANDLERS LAINNYA ---
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -139,7 +125,7 @@ export default function ImageUploader({
 
   const handleClick = () => {
     if (isCameraMode) {
-      openCameraModal(); // Panggil fungsi buka modal
+      openCameraModal();
     } else {
       fileInputRef.current?.click();
     }
@@ -147,7 +133,6 @@ export default function ImageUploader({
 
   return (
     <>
-      {/* --- WIDGET UPLOAD UTAMA --- */}
       <div className="aspect-square w-full max-w-md mx-auto bg-white border-2 border-dashed border-gray-300 rounded-3xl overflow-hidden relative shadow-sm hover:border-green-400 transition-colors group">
         {!preview ? (
           <div
@@ -211,11 +196,9 @@ export default function ImageUploader({
         />
       </div>
 
-      {/* --- MODAL KAMERA --- */}
       {showCamera && (
         <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
           <div className="relative w-full max-w-lg bg-black rounded-3xl overflow-hidden shadow-2xl flex flex-col">
-            {/* Header Modal */}
             <div className="absolute top-0 left-0 right-0 p-4 flex justify-end z-20">
               <button
                 onClick={closeCameraModal}
@@ -224,15 +207,12 @@ export default function ImageUploader({
                 <X className="w-6 h-6" />
               </button>
             </div>
-
-            {/* Video Preview Area */}
             <div className="relative aspect-3/4 bg-gray-900 w-full">
               {cameraLoading && (
                 <div className="absolute inset-0 flex items-center justify-center text-white z-10">
                   <Loader2 className="w-8 h-8 animate-spin" />
                 </div>
               )}
-
               {cameraError ? (
                 <div className="flex items-center justify-center h-full px-8 text-center">
                   <p className="text-red-400">{cameraError}</p>
@@ -247,8 +227,6 @@ export default function ImageUploader({
                 />
               )}
             </div>
-
-            {/* Footer / Capture Button */}
             {!cameraError && (
               <div className="p-6 bg-gray-900 flex justify-center pb-8">
                 <button
@@ -260,8 +238,6 @@ export default function ImageUploader({
                 </button>
               </div>
             )}
-
-            {/* Hidden canvas for capturing */}
             <canvas ref={canvasRef} className="hidden" />
           </div>
         </div>

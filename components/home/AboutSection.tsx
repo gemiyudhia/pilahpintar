@@ -2,14 +2,14 @@ import Image from "next/image";
 
 export default function AboutSection() {
   return (
-    <section id="about" className="py-20 lg:py-28 bg-gray-50">
+    <section id="about" className="py-20 lg:py-28 bg-gray-50 rounded-2xl">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="hidden lg:block relative">
             <div className=""></div>
             <Image
-              className="relative rounded-3xl shadow-xl z-10 w-full object-cover"
-              src="/about-image.png"
+              className="relative z-10 w-full object-cover"
+              src="/person-detecting_enhanced.jpg"
               alt="Tentang PilahPintar"
               width={600}
               height={500}
@@ -27,12 +27,7 @@ export default function AboutSection() {
               <p>
                 Indonesia menghasilkan jutaan ton sampah setiap tahunnya, namun
                 tingkat daur ulang masih rendah karena sulitnya proses
-                pemilahan.
-                <span className="font-semibold text-gray-800">
-                  {" "}
-                  PilahPintar{" "}
-                </span>
-                hadir sebagai solusi cerdas.
+                pemilahan. PilahPintar hadir sebagai solusi cerdas.
               </p>
               <p>
                 Menggabungkan teknologi <em>Artificial Intelligence</em>{" "}

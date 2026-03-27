@@ -16,7 +16,6 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
       >
         {isOpen ? <X size={28} /> : <Menu size={28} />}
       </button>
-
       {isOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-gray-100 shadow-lg py-5 px-5 flex flex-col gap-4">
           {NAV_LINKS.map((link) => (

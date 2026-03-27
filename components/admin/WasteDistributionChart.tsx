@@ -10,17 +10,15 @@ import {
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-// 1. Definisikan Warna berdasarkan Label YOLO
 const COLORS_MAP: Record<string, string> = {
-  plastic: "#3b82f6", // Blue-500
-  paper: "#eab308", // Yellow-500
-  metal: "#64748b", // Slate-500
-  glass: "#10b981", // Emerald-500
-  organic: "#22c55e", // Green-500
-  default: "#8b5cf6", // Violet-500 (untuk yang tidak dikenal)
+  plastic: "#3b82f6",
+  paper: "#eab308",
+  metal: "#64748b",
+  glass: "#10b981",
+  organic: "#22c55e",
+  default: "#8b5cf6",
 };
 
-// 2. Interface Props
 interface ChartData {
   name: string;
   value: number;
@@ -28,7 +26,6 @@ interface ChartData {
 }
 
 export function WasteDistributionChart({ data }: { data: ChartData[] }) {
-  // Jika data kosong, tampilkan pesan
   if (!data || data.length === 0) {
     return (
       <Card className="border-0 shadow-sm h-full min-h-87.5 flex items-center justify-center">
@@ -50,14 +47,12 @@ export function WasteDistributionChart({ data }: { data: ChartData[] }) {
                 data={data}
                 cx="50%"
                 cy="50%"
-                innerRadius={60} // Membuat efek Donut Chart
+                innerRadius={60}
                 outerRadius={80}
                 paddingAngle={5}
                 dataKey="value"
               >
                 {data.map((entry, index) => {
-                  // Tentukan warna berdasarkan label_kelas (misal: 'plastic')
-                  // Kalau label ada 'plastic' pakai warna biru, dst.
                   let color = COLORS_MAP["default"];
 
                   const labelLower = entry.label.toLowerCase();

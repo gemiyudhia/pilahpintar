@@ -1,5 +1,3 @@
-// prisma/schema.prisma
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -22,11 +20,10 @@ model Admin {
 // 2. Kategori
 model Kategori {
   id_kategori    Int     @id @default(autoincrement())
-  label_kelas    String  @unique // Label dari YOLO (misal: 'plastic_bottle')
-  nama_alias     String  // Nama tampilan (misal: 'Botol Plastik')
-  jenis_material String  // Info material (misal: 'Plastik PET')
+  label_kelas    String  @unique 
+  nama_alias     String  
+  jenis_material String  
   
-  // SAYA UBAH KE INT AGAR TIDAK ERROR DI NEXT.JS (Rupiah biasanya tidak pakai koma)
   nilai_jual     Int?    @default(0) 
 
   rekomendasi Rekomendasi?
@@ -38,7 +35,7 @@ model Kategori {
 // 3. Rekomendasi
 model Rekomendasi {
   id_rekomendasi Int    @id @default(autoincrement())
-  isi_konten     String // Di Postgres otomatis jadi Text (Bisa panjang)
+  isi_konten     String 
 
   id_kategori Int      @unique
   kategori    Kategori @relation(fields: [id_kategori], references: [id_kategori], onDelete: Cascade)
@@ -49,14 +46,13 @@ model Rekomendasi {
 // 4. Log_Riwayat
 model LogRiwayat {
   id_riwayat    Int      @id @default(autoincrement())
-  lokasi_gambar String   // URL gambar dari Supabase Storage
-  skor_akurasi  Float    // Tipe Float standar (Double Precision)
+  lokasi_gambar String  
+  skor_akurasi  Float   
   waktu_deteksi DateTime @default(now())
   
-  // Tambahan info agar tidak perlu join tabel saat menampilkan list sederhana
   label_deteksi String?  
 
-  id_kategori Int?     // Dibuat optional (Int?) jaga-jaga jika sampah tidak dikenali
+  id_kategori Int?     
   kategori    Kategori? @relation(fields: [id_kategori], references: [id_kategori])
 
   @@map("log_riwayat")

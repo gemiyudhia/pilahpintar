@@ -9,13 +9,11 @@ import { useRouter } from "next/navigation";
 import ImageUploader from "./ImageUploader";
 
 export function DetectionClient() {
-  // --- STATE ---
   const [isCameraMode, setIsCameraMode] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const { push } = useRouter();
 
-  // --- HANDLERS ---
   const handleFileSelect = (file: File) => {
     const objectUrl = URL.createObjectURL(file);
     setPreview(objectUrl);
@@ -29,7 +27,6 @@ export function DetectionClient() {
     if (!preview) return;
     setIsAnalyzing(true);
 
-    // Simulasi API Call
     setTimeout(() => {
       const dummyId = "123";
       const dummyResult = {
@@ -57,9 +54,7 @@ export function DetectionClient() {
   return (
     <>
       <Header />
-
       <ModeToggle isCameraMode={isCameraMode} onToggle={setIsCameraMode} />
-
       <ImageUploader
         preview={preview}
         isCameraMode={isCameraMode}
@@ -67,8 +62,6 @@ export function DetectionClient() {
         onFileSelect={handleFileSelect}
         onClear={handleClear}
       />
-
-      {/* Tombol Deteksi */}
       <Button
         onClick={handleDetect}
         className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white font-bold py-6 text-lg rounded-xl shadow-lg shadow-green-600/20"

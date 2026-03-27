@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/form";
 import Image from "next/image";
 
-// 1. UPDATE SCHEMA: Ganti Email jadi Username (String biasa)
 const formSchema = z.object({
   username: z.string().min(1, {
     message: "Username wajib diisi.",
@@ -39,7 +38,7 @@ export function LoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "", // Default kosong
+      username: "",
       password: "",
     },
   });
@@ -49,9 +48,8 @@ export function LoginForm() {
     setError("");
 
     try {
-      // 2. UPDATE SIGNIN: Kirim 'username' ke NextAuth
       const res = await signIn("credentials", {
-        username: values.username, // Field ini harus match dengan route.ts
+        username: values.username,
         password: values.password,
         redirect: false,
       });
@@ -60,7 +58,7 @@ export function LoginForm() {
         setError("Username atau password salah.");
         setIsLoading(false);
       } else {
-        router.push("/admin/dashboard"); // Redirect ke dashboard admin
+        router.push("/admin/dashboard");
         router.refresh();
       }
     } catch (error) {
@@ -92,8 +90,6 @@ export function LoginForm() {
                 <p>{error}</p>
               </div>
             )}
-
-            {/* Field USERNAME (Bukan Email lagi) */}
             <FormField
               control={form.control}
               name="username"
@@ -113,7 +109,6 @@ export function LoginForm() {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="password"
@@ -134,7 +129,6 @@ export function LoginForm() {
                 </FormItem>
               )}
             />
-
             <div className="pt-4">
               <Button
                 type="submit"
@@ -150,10 +144,6 @@ export function LoginForm() {
                   "Masuk Dashboard"
                 )}
               </Button>
-            </div>
-
-            <div className="text-center text-xs text-gray-400">
-              Akun Proposal: admin / adminpilahpintar
             </div>
           </form>
         </Form>

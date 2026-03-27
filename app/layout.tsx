@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-// Import ClientLayout yang baru dibuat
 import ClientLayout from "@/components/layout/ClientLayout";
 
 const poppins = Poppins({
@@ -24,7 +23,6 @@ export default function RootLayout({
   return (
     <html className="scroll-smooth" lang="en">
       <body className={`${poppins.className} antialiased`}>
-        {/* Gunakan ClientLayout sebagai pembungkus */}
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

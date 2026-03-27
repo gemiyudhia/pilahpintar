@@ -17,9 +17,6 @@ export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
   if (!session) redirect("/login");
 
-  // =========================================
-  // 1. FETCH DATA
-  // =========================================
   const [
     totalDeteksi,
     totalKategori,
@@ -27,18 +24,14 @@ export default async function DashboardPage() {
     topCategoriesStats,
     allCategoriesDistribution,
   ] = await Promise.all([
-    // A. Total Semua
     prisma.logRiwayat.count(),
 
-    // B. Total Kategori
     prisma.kategori.count(),
 
-    // C. Hari Ini
     prisma.logRiwayat.count({
       where: { waktu_deteksi: { gte: getStartOfDay() } },
     }),
 
-    // D. Top 3 List
     prisma.logRiwayat.groupBy({
       by: ["id_kategori"],
       _count: { id_kategori: true },
@@ -47,24 +40,19 @@ export default async function DashboardPage() {
       take: 3,
     }),
 
-    // E. CHART DATA (PENTING: Gunakan include agar _count terbaca typescript)
     prisma.kategori.findMany({
       select: {
-        // Gunakan select
         nama_alias: true,
         label_kelas: true,
         _count: {
           select: {
-            log_riwayat: true, // Pastikan ini 'log_riwayat' (sesuai schema)
+            log_riwayat: true,
           },
         },
       },
     }),
   ]);
 
-  // =========================================
-  // 2. OLAH DATA UNTUK CHART
-  // =========================================
   const chartData = allCategoriesDistribution
     .map((cat) => ({
       name: cat.nama_alias,
@@ -73,9 +61,6 @@ export default async function DashboardPage() {
     }))
     .filter((item) => item.value > 0);
 
-  // =========================================
-  // 3. OLAH DATA UNTUK TOP 3 LIST
-  // =========================================
   const categoryDetails = await prisma.kategori.findMany({
     where: {
       id_kategori: {
@@ -119,10 +104,8 @@ export default async function DashboardPage() {
         />
       </div>
 
-      {/* CHART & LIST */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">
-          {/* Pastikan komponen ini menerima props 'data' */}
           <WasteDistributionChart data={chartData} />
         </div>
 
@@ -174,7 +157,6 @@ export default async function DashboardPage() {
   );
 }
 
-// Helper Component
 function StatsCard({ title, value, icon: Icon, trend, subtext }: any) {
   return (
     <Card className="border-0 shadow-sm">

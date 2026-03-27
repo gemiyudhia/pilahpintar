@@ -14,21 +14,17 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { deleteKategori } from "@/app/actions/actions"; // Sesuaikan path import server action Anda
-
+import { deleteKategori } from "@/app/actions/actions";
 export function DeleteButton({ id, title }: { id: number; title: string }) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      // Panggil Server Action
       await deleteKategori(id);
     } catch (error) {
-      console.error("Gagal menghapus:", error);
       setIsDeleting(false);
     }
-    // Tidak perlu set false jika berhasil, karena halaman akan refresh otomatis
   };
 
   return (
@@ -61,7 +57,6 @@ export function DeleteButton({ id, title }: { id: number; title: string }) {
           <AlertDialogCancel disabled={isDeleting}>Batal</AlertDialogCancel>
           <AlertDialogAction
             onClick={(e) => {
-              // Prevent default agar modal tidak langsung nutup sebelum loading
               e.preventDefault();
               handleDelete();
             }}

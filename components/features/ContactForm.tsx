@@ -65,7 +65,6 @@ export default function ContactForm() {
             Jika ada keluhan atau saran silahkan hubungi kami.
           </p>
         </div>
-
         <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100 shadow-sm">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -88,7 +87,6 @@ export default function ContactForm() {
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="email"
@@ -108,7 +106,6 @@ export default function ContactForm() {
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="message"
@@ -128,7 +125,6 @@ export default function ContactForm() {
                   </FormItem>
                 )}
               />
-
               <Button
                 type="submit"
                 className="w-full bg-green-600 hover:bg-green-700 font-bold h-11 cursor-pointer"

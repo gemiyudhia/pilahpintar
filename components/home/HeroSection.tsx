@@ -15,7 +15,6 @@ export default function HeroSection() {
             Didukung oleh teknologi Deep Learning YOLOv8. Identifikasi jenis
             sampah Plastik, Kertas, Logam, dan Kaca secara instan dan akurat.
           </p>
-
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <Link href="/detect" className="w-full sm:w-auto">
               <Button className="w-full px-8 py-6 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg text-lg cursor-pointer">
@@ -29,12 +28,10 @@ export default function HeroSection() {
             </Link>
           </div>
         </div>
-
         <div className="w-full lg:w-1/2 hidden lg:flex justify-center relative">
           <div className="absolute top-0 right-0 -z-10 w-96 h-96 bg-green-100 rounded-full blur-3xl opacity-50"></div>
-
           <Image
-            src="/hero-image.png"
+            src="/hero-illustration_enhanced.jpg"
             alt="Ilustrasi deteksi sampah"
             width={1000}
             height={1000}

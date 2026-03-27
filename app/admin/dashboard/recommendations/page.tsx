@@ -11,26 +11,22 @@ import {
 import { Plus, Pencil } from "lucide-react";
 import Link from "next/link";
 import { DeleteButton } from "@/components/admin/DeleteButton";
-import { SearchInput } from "@/components/admin/SearchInput"; // Import component baru tadi
+import { SearchInput } from "@/components/admin/SearchInput";
 
-// Definisikan tipe Props untuk menangkap parameter URL
 type Props = {
   searchParams: Promise<{ query?: string }>;
 };
 
 export default async function RecommendationsPage(props: Props) {
-  // 1. Ambil Query Pencarian dari URL
   const searchParams = await props.searchParams;
   const query = searchParams?.query || "";
 
-  // 2. Query Database dengan Filter Pencarian
   const dataKategori = await prisma.kategori.findMany({
     where: {
-      // Gunakan OR agar bisa mencari di berbagai kolom
       OR: [
-        { nama_alias: { contains: query } }, // Cari di nama
-        { jenis_material: { contains: query } }, // Cari di jenis material
-        { label_kelas: { contains: query } }, // Cari di label
+        { nama_alias: { contains: query } },
+        { jenis_material: { contains: query } },
+        { label_kelas: { contains: query } },
       ],
     },
     orderBy: { id_kategori: "asc" },
@@ -38,7 +34,6 @@ export default async function RecommendationsPage(props: Props) {
 
   return (
     <div className="space-y-6 p-8">
-      {/* HEADER SECTION */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">
@@ -56,13 +51,10 @@ export default async function RecommendationsPage(props: Props) {
         </Link>
       </div>
 
-      {/* FILTER & SEARCH */}
       <div className="bg-white p-4 rounded-xl shadow-sm border flex gap-4">
-        {/* Panggil Component SearchInput disini */}
         <SearchInput />
       </div>
 
-      {/* TABLE SECTION */}
       <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
         <Table>
           <TableHeader className="bg-gray-50">

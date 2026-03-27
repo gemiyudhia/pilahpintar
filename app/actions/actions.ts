@@ -1,11 +1,9 @@
-// app/actions/kategori.ts
 "use server";
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-// 1. CREATE (Tambah Data Baru)
 export async function createKategori(formData: FormData) {
   const label = formData.get("label_kelas") as string;
   const nama = formData.get("nama_alias") as string;
@@ -31,7 +29,6 @@ export async function createKategori(formData: FormData) {
   redirect("/admin/dashboard");
 }
 
-// 2. UPDATE (Edit Data)
 export async function updateKategori(formData: FormData) {
   const id = parseInt(formData.get("id_kategori") as string);
   const nama = formData.get("nama_alias") as string;
@@ -58,7 +55,6 @@ export async function updateKategori(formData: FormData) {
   redirect("/admin/dashboard");
 }
 
-// 3. DELETE (Hapus Data)
 export async function deleteKategori(id: number) {
   await prisma.kategori.delete({
     where: { id_kategori: id },

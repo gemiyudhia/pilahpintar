@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NAV_LINKS } from "./nav-data"; // Import datanya
+import { NAV_LINKS } from "./nav-data";
 import { Button } from "@/components/ui/button";
 
 export default function DesktopMenu() {

@@ -62,13 +62,11 @@ export default function WasteCard({
         />
         <div className="absolute top-3 left-3"></div>
       </div>
-
       <CardHeader>
         <CardTitle className={`text-xl font-bold ${theme.color}`}>
           {title}
         </CardTitle>
       </CardHeader>
-
       <CardContent>
         <CardDescription className="line-clamp-3 leading-relaxed">
           {description}

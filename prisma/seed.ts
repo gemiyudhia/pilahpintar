@@ -7,7 +7,6 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("🌱 Seeding Database: 4 Kelas Utama (Tanpa Saran Singkat)...");
 
-  // 1. ADMIN
   const hashedPassword = await bcrypt.hash("adminpilahpintar", 10);
   await prisma.admin.upsert({
     where: { username: "admin" },
@@ -18,9 +17,6 @@ async function main() {
     },
   });
 
-  // 2. MASTER DATA (PLASTIK, KERTAS, LOGAM, KACA)
-
-  // PLASTIK
   await prisma.kategori.upsert({
     where: { label_kelas: "plastic" },
     update: {},
@@ -29,7 +25,6 @@ async function main() {
       nama_alias: "Sampah Plastik",
       jenis_material: "Polimer (PET/PP/LDPE)",
       nilai_jual: 2500,
-      // saran_singkat DIHAPUS
       rekomendasi: {
         create: {
           isi_konten: `STANDAR PENGELOLAAN (LHK No. 14/2021):
@@ -44,7 +39,6 @@ async function main() {
     },
   });
 
-  // KERTAS
   await prisma.kategori.upsert({
     where: { label_kelas: "paper" },
     update: {},
@@ -112,8 +106,6 @@ async function main() {
       },
     },
   });
-
-  console.log("✅ Database Updated: Tanpa kolom saran_singkat.");
 }
 
 main()

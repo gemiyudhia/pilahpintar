@@ -11,40 +11,32 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Download, Eye, Filter } from "lucide-react";
-import { SearchInput } from "@/components/admin/SearchInput"; // Pastikan path ini benar (komponen yang kita buat sebelumnya)
+import { SearchInput } from "@/components/admin/SearchInput";
 
 export const dynamic = "force-dynamic";
 
-// Definisikan tipe Props untuk menangkap URL params
 type Props = {
   searchParams: Promise<{ query?: string }>;
 };
 
 export default async function HistoryPage(props: Props) {
-  // 1. Ambil kata kunci pencarian dari URL
   const searchParams = await props.searchParams;
   const query = searchParams?.query || "";
 
-  // 2. QUERY DATABASE DENGAN LOGIKA PENCARIAN CERDAS
   const logs = await prisma.logRiwayat.findMany({
     where: {
-      // Kita cari berdasarkan RELASI ke tabel Kategori
       kategori: {
         OR: [
-          // Cari jika Nama Tampilan mengandung kata kunci
           {
             nama_alias: {
               contains: query,
-              // mode: "insensitive", // Uncomment jika pakai PostgreSQL. MySQL biasanya default case-insensitive
             },
           },
-          // ATAU cari jika Label YOLO mengandung kata kunci
           {
             label_kelas: {
               contains: query,
             },
           },
-          // ATAU cari jika Jenis Material mengandung kata kunci
           {
             jenis_material: {
               contains: query,
@@ -61,7 +53,6 @@ export default async function HistoryPage(props: Props) {
 
   return (
     <div className="space-y-6 p-8">
-      {/* 1. Header & Actions */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Riwayat Deteksi</h1>
@@ -75,9 +66,7 @@ export default async function HistoryPage(props: Props) {
         </Button>
       </div>
 
-      {/* 2. Filters & Search */}
       <div className="flex flex-col sm:flex-row gap-4 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-        {/* GUNAKAN KOMPONEN SEARCH INPUT DISINI */}
         <SearchInput />
 
         <Button variant="outline" className="gap-2">
@@ -85,7 +74,6 @@ export default async function HistoryPage(props: Props) {
         </Button>
       </div>
 
-      {/* 3. Data Table */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <Table>
           <TableHeader className="bg-gray-50">
@@ -104,7 +92,6 @@ export default async function HistoryPage(props: Props) {
               const percentage = Math.round(item.skor_akurasi * 100);
               const isSuccess = percentage >= 50;
 
-              // Format Tanggal Indonesia
               const formattedDate = new Date(item.waktu_deteksi).toLocaleString(
                 "id-ID",
                 {
@@ -113,7 +100,7 @@ export default async function HistoryPage(props: Props) {
                   year: "numeric",
                   hour: "2-digit",
                   minute: "2-digit",
-                }
+                },
               );
 
               return (
@@ -122,24 +109,21 @@ export default async function HistoryPage(props: Props) {
                     #{item.id_riwayat}
                   </TableCell>
 
-                  {/* Gambar Cloudinary */}
                   <TableCell>
                     <div className="relative w-16 h-16 rounded-lg overflow-hidden border border-gray-200 bg-gray-100">
                       <Image
                         src={item.lokasi_gambar}
-                        alt={item.kategori.nama_alias}
+                        alt={item.kategori ? item.kategori.nama_alias : ""}
                         fill
                         className="object-cover"
                       />
                     </div>
                   </TableCell>
 
-                  {/* Nama Alias (Ini yang dicari user) */}
                   <TableCell className="font-medium text-gray-700">
-                    {item.kategori.nama_alias}
-                    {/* Tampilkan label kecil dibawahnya */}
+                    {item.kategori?.nama_alias}
                     <div className="text-xs text-gray-400 font-mono mt-0.5">
-                      {item.kategori.label_kelas}
+                      {item.kategori?.label_kelas}
                     </div>
                   </TableCell>
 
@@ -182,7 +166,6 @@ export default async function HistoryPage(props: Props) {
               );
             })}
 
-            {/* State Kosong / Tidak Ditemukan */}
             {logs.length === 0 && (
               <TableRow>
                 <TableCell
@@ -205,7 +188,6 @@ export default async function HistoryPage(props: Props) {
           </TableBody>
         </Table>
 
-        {/* Footer (Info Jumlah) */}
         <div className="p-4 border-t border-gray-100 bg-gray-50 text-sm text-gray-500">
           Menampilkan {logs.length} data riwayat.
         </div>

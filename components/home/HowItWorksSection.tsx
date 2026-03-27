@@ -21,7 +21,6 @@ export default function HowItWorksSection() {
               </Button>
             </Link>
           </div>
-
           <div className="w-full lg:w-2/3 space-y-8">
             {HOW_IT_WORKS_STEPS.map((step, index) => (
               <div
@@ -41,7 +40,6 @@ export default function HowItWorksSection() {
                 </div>
               </div>
             ))}
-
             <Link href="/detect">
               <Button className="w-full lg:hidden mt-8 px-6 py-4 bg-green-600 text-white font-bold rounded-xl shadow-lg">
                 Coba Sekarang

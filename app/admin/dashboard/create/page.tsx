@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { createKategori } from "@/app/actions/actions"; // Pastikan import ini benar
+import { createKategori } from "@/app/actions/actions";
 import Link from "next/link";
 
 export default function CreatePage() {
@@ -21,7 +21,6 @@ export default function CreatePage() {
         action={createKategori}
         className="space-y-6 bg-white p-6 border rounded-xl shadow-sm"
       >
-        {/* 1. Label YOLO (Sangat Penting) */}
         <div className="bg-blue-50 p-4 rounded border border-blue-200">
           <label className="block text-sm font-bold text-blue-800 mb-1">
             Label Kelas (YOLO)
@@ -39,7 +38,6 @@ export default function CreatePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* 2. Nama Tampilan */}
           <div>
             <label className="block text-sm font-medium mb-1">
               Nama Tampilan (User)
@@ -52,7 +50,6 @@ export default function CreatePage() {
             />
           </div>
 
-          {/* 3. Jenis Material */}
           <div>
             <label className="block text-sm font-medium mb-1">
               Jenis Material
@@ -66,7 +63,6 @@ export default function CreatePage() {
           </div>
         </div>
 
-        {/* 4. Harga */}
         <div>
           <label className="block text-sm font-medium mb-1">
             Estimasi Nilai Jual (Rp/kg)
@@ -86,7 +82,6 @@ export default function CreatePage() {
           </p>
         </div>
 
-        {/* 5. Konten Rekomendasi */}
         <div>
           <label className="block text-sm font-medium mb-1">
             Panduan & Rekomendasi (Sesuai LHK)
@@ -103,7 +98,6 @@ export default function CreatePage() {
           </p>
         </div>
 
-        {/* Tombol Aksi */}
         <div className="pt-4 flex gap-3 border-t">
           <Button
             type="submit"

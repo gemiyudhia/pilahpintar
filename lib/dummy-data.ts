@@ -1,5 +1,3 @@
-// lib/dummy-data.ts
-
 export interface DetectionResult {
   id: string;
   imageUrl: string;

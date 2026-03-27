@@ -1,4 +1,3 @@
-// app/api/auth/[...nextauth]/route.ts
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
@@ -10,13 +9,12 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text" }, // Ganti Email jadi Username
+        username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         if (!credentials?.username || !credentials?.password) return null;
 
-        // Cari di tabel ADMIN (bukan User)
         const admin = await prisma.admin.findUnique({
           where: { username: credentials.username },
         });
@@ -30,9 +28,8 @@ export const authOptions: AuthOptions = {
 
         if (!isPasswordValid) return null;
 
-        // Return data session
         return {
-          id: admin.id_admin.toString(), // NextAuth butuh ID string
+          id: admin.id_admin.toString(),
           name: admin.username,
         };
       },

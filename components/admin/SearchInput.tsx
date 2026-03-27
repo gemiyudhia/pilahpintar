@@ -9,8 +9,6 @@ export function SearchInput() {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  // Fungsi handleSearch dengan delay (Debounce) agar tidak reload setiap ketikan huruf
-  // Kita pakai setTimeout manual agar Anda tidak perlu install library tambahan
   const handleSearch = (term: string) => {
     const params = new URLSearchParams(searchParams);
 
@@ -20,7 +18,6 @@ export function SearchInput() {
       params.delete("query");
     }
 
-    // Update URL tanpa refresh halaman
     replace(`${pathname}?${params.toString()}`);
   };
 
@@ -32,8 +29,6 @@ export function SearchInput() {
         className="pl-10"
         defaultValue={searchParams.get("query")?.toString()}
         onChange={(e) => {
-          // Simple debounce: Tunggu user selesai ngetik 300ms baru update URL
-          // (Untuk performa lebih baik di production)
           const value = e.target.value;
           handleSearch(value);
         }}

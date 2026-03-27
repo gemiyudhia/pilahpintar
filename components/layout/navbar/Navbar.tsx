@@ -13,7 +13,6 @@ const Navbar = () => {
       <div className="container mx-auto px-5 py-4 flex items-center justify-between">
         <Logo />
         <DesktopMenu />
-
         <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
       </div>
     </nav>

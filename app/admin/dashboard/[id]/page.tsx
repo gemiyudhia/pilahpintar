@@ -1,26 +1,20 @@
-// app/admin/dashboard/[id]/page.tsx
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { updateKategori } from "@/app/actions/actions";
 import Link from "next/link";
-import { redirect } from "next/navigation"; // Tambahkan ini buat safety
 
-// 1. Definisikan Tipe Params sebagai Promise
 type PageProps = {
   params: Promise<{ id: string }>;
 };
 
 export default async function EditPage(props: PageProps) {
-  // 2. AWAIT PARAMS DULU (Ini yang bikin error sebelumnya)
   const params = await props.params;
   const id = parseInt(params.id);
 
-  // Cek jika ID tidak valid (bukan angka)
   if (isNaN(id)) {
     return <div className="p-8">ID tidak valid</div>;
   }
 
-  // 3. Ambil data existing
   const data = await prisma.kategori.findUnique({
     where: { id_kategori: id },
     include: { rekomendasi: true },
@@ -46,10 +40,8 @@ export default async function EditPage(props: PageProps) {
         action={updateKategori}
         className="space-y-6 bg-white p-6 border rounded-xl shadow-sm"
       >
-        {/* ID Hidden (Wajib) */}
         <input type="hidden" name="id_kategori" value={data.id_kategori} />
 
-        {/* 1. Label YOLO (READ ONLY - Tidak boleh diedit sembarangan) */}
         <div className="bg-yellow-50 p-4 rounded border border-yellow-200">
           <label className="block text-xs font-bold text-yellow-800 mb-1 uppercase">
             Label Deteksi AI (YOLO Class) - Jangan Diubah
@@ -67,7 +59,6 @@ export default async function EditPage(props: PageProps) {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          {/* 2. Nama Tampilan */}
           <div>
             <label className="block text-sm font-medium mb-1">
               Nama Tampilan (User)
@@ -80,7 +71,6 @@ export default async function EditPage(props: PageProps) {
             />
           </div>
 
-          {/* 3. Jenis Material */}
           <div>
             <label className="block text-sm font-medium mb-1">
               Jenis Material
@@ -94,7 +84,6 @@ export default async function EditPage(props: PageProps) {
           </div>
         </div>
 
-        {/* 4. Harga */}
         <div>
           <label className="block text-sm font-medium mb-1">
             Estimasi Nilai Jual (Rp/kg)
@@ -114,13 +103,12 @@ export default async function EditPage(props: PageProps) {
           </p>
         </div>
 
-        {/* 5. Konten Rekomendasi (Text Area Panjang) */}
         <div>
           <label className="block text-sm font-medium mb-1">
             Panduan & Rekomendasi (Sesuai LHK)
           </label>
           <textarea
-            name="konten" // Sesuai seed.ts dan schema
+            name="konten"
             defaultValue={data.rekomendasi?.isi_konten}
             rows={12}
             className="w-full border p-3 rounded font-sans text-sm leading-relaxed focus:ring-2 focus:ring-blue-500 outline-none"
@@ -132,7 +120,6 @@ export default async function EditPage(props: PageProps) {
           </p>
         </div>
 
-        {/* Tombol Aksi */}
         <div className="pt-4 flex gap-3 border-t">
           <Button type="submit" className="w-full md:w-auto">
             Simpan Perubahan

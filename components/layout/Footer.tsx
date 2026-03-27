@@ -26,7 +26,6 @@ export default function Footer() {
               Anda memilah sampah anorganik secara cerdas.
             </p>
           </div>
-
           <div className="col-span-1 md:col-span-3 md:col-start-7">
             <h3 className="text-white font-bold text-lg mb-4">Navigasi</h3>
             <ul className="space-y-3 text-sm">
@@ -42,38 +41,21 @@ export default function Footer() {
               ))}
             </ul>
           </div>
-
           <div className="col-span-1 md:col-span-3 text-right">
-            <h3 className="text-white font-bold text-lg mb-4">Ikuti Kami</h3>
+            <h3 className="text-white font-bold text-lg mb-4">Referensi</h3>
 
-            <div className="flex gap-3 justify-end">
-              <a
-                href="#"
-                className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-green-600 hover:text-white transition-all"
-              >
-                <Instagram className="w-4 h-4 md:w-5 md:h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-green-600 hover:text-white transition-all"
-              >
-                <Twitter className="w-4 h-4 md:w-5 md:h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-green-600 hover:text-white transition-all"
-              >
-                <Facebook className="w-4 h-4 md:w-5 md:h-5" />
-              </a>
-            </div>
+            <Link href="https://www.acuanbersama.com/2021/08/permenlhk-nomor-14-tahun-2021-tentang.html">
+              Standar LHK
+            </Link>
           </div>
         </div>
-
         <div className="border-t border-slate-800 pt-8 text-center">
           <p className="text-sm text-slate-500">
             &copy; {new Date().getFullYear()}{" "}
-            <span className="text-white font-medium">PilahPintar</span>. All
-            rights reserved. Dibuat oleh Gemi Yudhia.
+            <span className="text-white font-medium">
+              Gemi Yudhia - Teknologi Informasi Universitas Teuku Umar.
+            </span>{" "}
+            All rights reserved.
           </p>
         </div>
       </div>

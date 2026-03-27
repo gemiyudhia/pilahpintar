@@ -12,7 +12,6 @@ import {
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-// Data Dummy Statistik 6 Bulan
 const DATA = [
   { name: "Jan", Plastik: 40, Kertas: 24, Logam: 24 },
   { name: "Feb", Plastik: 30, Kertas: 13, Logam: 22 },
@@ -57,21 +56,18 @@ export function WasteChart() {
               />
               <Legend wrapperStyle={{ paddingTop: "20px" }} />
 
-              {/* Bar untuk Plastik (Hijau) */}
               <Bar
                 dataKey="Plastik"
                 fill="#16a34a"
                 radius={[4, 4, 0, 0]}
                 name="Plastik"
               />
-              {/* Bar untuk Kertas (Kuning/Orange) */}
               <Bar
                 dataKey="Kertas"
                 fill="#eab308"
                 radius={[4, 4, 0, 0]}
                 name="Kertas"
               />
-              {/* Bar untuk Logam (Abu-abu) */}
               <Bar
                 dataKey="Logam"
                 fill="#94a3b8"
