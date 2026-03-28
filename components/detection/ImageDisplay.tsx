@@ -3,6 +3,11 @@ import { Badge } from "@/components/ui/badge";
 import { DetectionResult } from "@/lib/dummy-data";
 
 export function ImageDisplay({ data }: { data: DetectionResult }) {
+  if (!data?.imageUrl) {
+    return (
+      <div className="p-4 text-center text-gray-500">Gambar tidak tersedia</div>
+    );
+  }
   return (
     <div className="p-4 pb-0">
       <div className="relative w-full aspect-4/3 bg-gray-100 rounded-xl overflow-hidden shadow-sm">
