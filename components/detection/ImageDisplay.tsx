@@ -10,7 +10,7 @@ export function ImageDisplay({ data }: { data: DetectionResult }) {
   }
   return (
     <div className="p-4 pb-0">
-      <div className="relative w-full aspect-4/3 bg-gray-100 rounded-xl overflow-hidden shadow-sm">
+      <div className="relative w-full aspect-4/5 bg-gray-100 rounded-xl overflow-hidden shadow-sm">
         <Image
           src={data.imageUrl}
           alt={data.label}

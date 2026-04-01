@@ -10,6 +10,12 @@ import { RecommendationList } from "@/components/detection/RecommendationList";
 import { ActionButton } from "@/components/detection/ActionButton";
 
 import { useParams } from "next/navigation";
+import {
+  getKerajinanByKategori,
+  Kerajinan,
+} from "@/lib/services/kerajinanService";
+import { mapLabelToKategori } from "@/lib/utils";
+import { KerajinanCarousel } from "@/components/features/KerajinanCaraousel";
 
 type ResultData = {
   id: string;
@@ -26,17 +32,18 @@ export default function ResultPage() {
   const id = params.id as string;
 
   const [data, setData] = useState<ResultData | null>(null);
+  const [kerajinan, setKerajinan] = useState<Kerajinan[]>([]);
 
   useEffect(() => {
     const stored = localStorage.getItem(`result_${id}`);
+    if (!stored) return;
 
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      console.log("📦 DATA DARI LOCAL STORAGE:", parsed);
-      setData(parsed);
-    } else {
-      console.warn("❌ Data tidak ditemukan di localStorage");
-    }
+    const parsed: ResultData = JSON.parse(stored);
+    setData(parsed);
+
+    // Fetch kerajinan berdasarkan label hasil deteksi
+    const idKategori = mapLabelToKategori(parsed.label);
+    getKerajinanByKategori(idKategori).then(setKerajinan);
   }, [id]);
 
   if (!data) {
@@ -49,11 +56,11 @@ export default function ResultPage() {
 
       <div className="container max-w-md mx-auto p-5 pb-10">
         <Card className="border-0 shadow-lg flex flex-col bg-white rounded-2xl">
-          {/* ✅ GAMBAR HASIL DETEKSI */}
+          {/* GAMBAR HASIL DETEKSI */}
           <ImageDisplay data={data} />
 
           <CardContent className="p-6 space-y-6">
-            {/* ✅ LABEL + DESKRIPSI DARI SUPABASE */}
+            {/* LABEL + DESKRIPSI DARI SUPABASE */}
             <InfoDetails
               title={`${data.label} (${(data.confidence * 100).toFixed(1)}%)`}
               description={data.description}
@@ -61,8 +68,13 @@ export default function ResultPage() {
 
             <div className="h-px w-full bg-gray-100" />
 
-            {/* ✅ LANGKAH DAUR ULANG */}
+            {/* LANGKAH DAUR ULANG */}
             <RecommendationList steps={data.recommendations} />
+
+            <div className="h-px w-full bg-gray-100" />
+
+            {/* CAROUSEL KERAJINAN */}
+            <KerajinanCarousel items={kerajinan} />
 
             <ActionButton />
           </CardContent>
