@@ -25,7 +25,7 @@ model Kategori {
   jenis_material String  
   
   nilai_jual     Int?    @default(0) 
-
+  kerajinan Kerajinan[]
   rekomendasi Rekomendasi?
   log_riwayat LogRiwayat[]
 
@@ -56,4 +56,17 @@ model LogRiwayat {
   kategori    Kategori? @relation(fields: [id_kategori], references: [id_kategori])
 
   @@map("log_riwayat")
+}
+
+// 5. kerajinan
+model Kerajinan {
+  id_kerajinan  Int     @id @default(autoincrement())
+  nama_kerajinan String
+  deskripsi      String?
+  gambar_url     String[]
+
+  id_kategori Int
+  kategori    Kategori @relation(fields: [id_kategori], references: [id_kategori], onDelete: Cascade)
+
+  @@map("kerajinan")
 }

@@ -1,138 +1,100 @@
+import RecommendationsClient from "@/components/admin/RecommendationsClient";
 import { prisma } from "@/lib/prisma";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Plus, Pencil } from "lucide-react";
-import Link from "next/link";
-import { DeleteButton } from "@/components/admin/DeleteButton";
-import { SearchInput } from "@/components/admin/SearchInput";
+import { WifiOff, RefreshCw } from "lucide-react";
 
 type Props = {
   searchParams: Promise<{ query?: string }>;
 };
 
+async function fetchRecommendationsData() {
+  try {
+    const [dataKategori, dataKerajinan] = await Promise.all([
+      prisma.kategori.findMany({
+        orderBy: { id_kategori: "asc" },
+      }),
+      prisma.kerajinan.findMany({
+        orderBy: { id_kerajinan: "asc" },
+        select: {
+          id_kerajinan: true,
+          nama_kerajinan: true,
+          deskripsi: true,
+          gambar_url: true,
+          id_kategori: true,
+          kategori: true,
+        },
+      }),
+    ]);
+
+    return { success: true as const, data: { dataKategori, dataKerajinan } };
+  } catch (error: any) {
+    console.error(
+      "[RecommendationsPage] Gagal mengambil data:",
+      error?.message ?? error,
+    );
+
+    const isCantReach =
+      error?.message?.includes("Can't reach database") ||
+      error?.message?.includes("ECONNREFUSED") ||
+      error?.message?.includes("pooler");
+
+    return {
+      success: false as const,
+      error: isCantReach
+        ? "Tidak dapat terhubung ke server database. Pastikan koneksi database aktif."
+        : "Terjadi kesalahan saat mengambil data rekomendasi.",
+    };
+  }
+}
+
 export default async function RecommendationsPage(props: Props) {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || "";
 
-  const dataKategori = await prisma.kategori.findMany({
-    where: {
-      OR: [
-        { nama_alias: { contains: query } },
-        { jenis_material: { contains: query } },
-        { label_kelas: { contains: query } },
-      ],
-    },
-    orderBy: { id_kategori: "asc" },
-  });
+  const result = await fetchRecommendationsData();
+
+  if (!result.success) {
+    return (
+      <div className="p-8">
+        <DatabaseErrorBanner
+          message={result.error}
+          retryHref="/admin/recommendations"
+        />
+      </div>
+    );
+  }
+
+  const { dataKategori, dataKerajinan } = result.data;
 
   return (
-    <div className="space-y-6 p-8">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-800">
-            Manajemen Rekomendasi
-          </h1>
-          <p className="text-sm text-gray-500">
-            Kelola data kategori sampah dan panduan daur ulang.
-          </p>
-        </div>
+    <RecommendationsClient
+      dataKategori={dataKategori}
+      dataKerajinan={dataKerajinan}
+      query={query}
+    />
+  );
+}
 
-        <Link href="/admin/dashboard/create">
-          <Button className="bg-green-600 hover:bg-green-700">
-            <Plus className="w-4 h-4 mr-2" /> Tambah Data
-          </Button>
-        </Link>
+function DatabaseErrorBanner({
+  message,
+  retryHref,
+}: {
+  message: string;
+  retryHref: string;
+}) {
+  return (
+    <div className="flex items-start gap-4 p-5 rounded-xl border border-red-200 bg-red-50 text-red-800">
+      <WifiOff className="w-5 h-5 mt-0.5 shrink-0 text-red-500" />
+      <div className="flex-1 min-w-0">
+        <p className="font-semibold text-sm">Koneksi Database Bermasalah</p>
+        <p className="text-sm text-red-600 mt-0.5">{message}</p>
       </div>
-
-      <div className="bg-white p-4 rounded-xl shadow-sm border flex gap-4">
-        <SearchInput />
-      </div>
-
-      <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
-        <Table>
-          <TableHeader className="bg-gray-50">
-            <TableRow>
-              <TableHead className="w-12.5">No</TableHead>
-              <TableHead>Kategori</TableHead>
-              <TableHead>Jenis Material</TableHead>
-              <TableHead>Nilai Jual</TableHead>
-              <TableHead>Label YOLO</TableHead>
-              <TableHead className="text-right">Aksi</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {dataKategori.map((item, index) => (
-              <TableRow key={item.id_kategori}>
-                <TableCell className="font-medium">{index + 1}</TableCell>
-
-                <TableCell>
-                  <span
-                    className={`px-2 py-1 rounded-full text-xs font-bold 
-                    ${
-                      item.label_kelas.includes("plastic")
-                        ? "bg-blue-100 text-blue-700"
-                        : item.label_kelas.includes("paper")
-                        ? "bg-yellow-100 text-yellow-700"
-                        : item.label_kelas.includes("metal")
-                        ? "bg-gray-100 text-gray-700"
-                        : "bg-green-100 text-green-700"
-                    }`}
-                  >
-                    {item.nama_alias}
-                  </span>
-                </TableCell>
-
-                <TableCell>{item.jenis_material}</TableCell>
-                <TableCell className="font-medium">
-                  Rp {item.nilai_jual?.toString()}
-                </TableCell>
-                <TableCell className="text-gray-500 font-mono text-xs">
-                  {item.label_kelas}
-                </TableCell>
-
-                <TableCell className="text-right">
-                  <div className="flex justify-end gap-2">
-                    <Link href={`/admin/dashboard/${item.id_kategori}`}>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-8 w-8 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
-                      >
-                        <Pencil className="w-4 h-4" />
-                      </Button>
-                    </Link>
-
-                    <DeleteButton
-                      id={item.id_kategori}
-                      title={item.nama_alias}
-                    />
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-
-            {dataKategori.length === 0 && (
-              <TableRow>
-                <TableCell
-                  colSpan={6}
-                  className="text-center h-24 text-gray-500"
-                >
-                  {query
-                    ? `Tidak ditemukan data untuk pencarian "${query}"`
-                    : "Belum ada data."}
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+      <a
+        href={retryHref}
+        className="flex items-center gap-1.5 text-sm font-medium text-red-700 hover:text-red-900 transition-colors shrink-0"
+      >
+        <RefreshCw className="w-4 h-4" />
+        Coba Lagi
+      </a>
     </div>
   );
 }
