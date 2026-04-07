@@ -15,6 +15,7 @@ export function ImageDisplay({ data }: { data: DetectionResult }) {
           src={data.imageUrl}
           alt={data.label}
           fill
+          sizes="(max-width: 1024px) 100vw, 50vw"
           className="object-cover"
           unoptimized
         />

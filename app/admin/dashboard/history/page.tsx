@@ -57,12 +57,11 @@ export default async function HistoryPage(props: Props) {
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Riwayat Deteksi</h1>
           <p className="text-sm text-gray-500">
-            Monitoring aktivitas deteksi sampah yang masuk (Storage:
-            Cloudinary).
+            Monitoring aktivitas deteksi sampah yang masuk.
           </p>
         </div>
         <Button variant="outline">
-          <Download className="w-4 h-4 mr-2" /> Export CSV
+          <Download className="w-4 h-4 mr-2" /> Cetak Laporan
         </Button>
       </div>
 

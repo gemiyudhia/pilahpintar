@@ -32,6 +32,7 @@ export function KerajinanCarousel({ items }: Props) {
                   src={item.gambar_url}
                   alt={item.nama_kerajinan}
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
                 />
               ) : (
