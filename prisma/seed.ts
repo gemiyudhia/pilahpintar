@@ -1,13 +1,10 @@
-// prisma/seed.ts
 import { PrismaClient } from "@prisma/client";
 import * as bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("🌱 Seeding Database: 4 Kelas Utama (Tanpa Saran Singkat)...");
-
-  const hashedPassword = await bcrypt.hash("adminpilahpintar", 10);
+  const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD!, 10);
   await prisma.admin.upsert({
     where: { username: "admin" },
     update: {},
