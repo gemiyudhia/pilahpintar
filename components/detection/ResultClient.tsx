@@ -15,6 +15,8 @@ import {
 } from "@/lib/services/kerajinanService";
 import { mapLabelToKategori } from "@/lib/utils";
 import { KerajinanCarousel } from "@/components/features/KerajinanCaraousel";
+import { Info, Sparkles } from "lucide-react";
+import { getResultByLabel } from "@/lib/services/detectionService";
 
 type ResultData = {
   id: string;
@@ -24,6 +26,7 @@ type ResultData = {
   imageUrl: string;
   category: string;
   recommendations: string[];
+  nilai_jual?: number;
 };
 
 export default function ResultClient({ id }: { id: string }) {
@@ -32,20 +35,33 @@ export default function ResultClient({ id }: { id: string }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const stored = localStorage.getItem(`result_${id}`);
-    if (!stored) {
+    async function fetchData() {
+      // ambil label dari URL / param / sebelumnya
+      const stored = localStorage.getItem(`result_${id}`);
+      if (!stored) {
+        setLoading(false);
+        return;
+      }
+
+      const parsed = JSON.parse(stored);
+
+      // 🔥 ambil data fresh dari Supabase
+      const result = await getResultByLabel(parsed.label);
+
+      setData({
+        ...parsed,
+        description: result?.description ?? parsed.description,
+        nilai_jual: result?.nilai_jual,
+      });
+
+      const idKategori = mapLabelToKategori(parsed.label);
+      const items = await getKerajinanByKategori(idKategori);
+      setKerajinan(items);
+
       setLoading(false);
-      return;
     }
 
-    const parsed: ResultData = JSON.parse(stored);
-    setData(parsed);
-
-    const idKategori = mapLabelToKategori(parsed.label);
-    Promise.all([getKerajinanByKategori(idKategori)]).then(([items]) => {
-      setKerajinan(items);
-      setLoading(false);
-    });
+    fetchData();
   }, [id]);
 
   if (loading) {
@@ -100,7 +116,16 @@ export default function ResultClient({ id }: { id: string }) {
                     <h1 className="text-4xl font-bold text-slate-900 leading-tight">
                       {data.label}
                     </h1>
-
+                    <div className="relative">
+                      {data.nilai_jual && (
+                        <p className="text-sm text-emerald-600 font-semibold absolute top-1 right-25">
+                          💰 Estimasi nilai jual: Rp{" "}
+                          {new Intl.NumberFormat("id-ID").format(
+                            data.nilai_jual,
+                          )}
+                        </p>
+                      )}
+                    </div>
                     {/* Confidence Indicator */}
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
@@ -125,24 +150,35 @@ export default function ResultClient({ id }: { id: string }) {
               </Card>
 
               {/* Description */}
-              <Card className="border-0 shadow-lg rounded-3xl bg-white">
-                <CardContent className="p-8">
-                  <h2 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">
-                    Deskripsi
-                  </h2>
-                  <p className="text-slate-700 leading-relaxed text-base">
-                    {data.description}
-                  </p>
-                </CardContent>
-              </Card>
+              <Card className="border border-emerald-100 shadow-xl rounded-3xl bg-linear-to-br from-white to-emerald-50/40 relative overflow-hidden group">
+                {/* Efek glow dekoratif di sudut */}
+                <div className="absolute top-0 right-0 -mt-6 -mr-6 w-32 h-32 bg-emerald-200 rounded-full opacity-20 blur-3xl transition-all group-hover:opacity-40"></div>
 
-              {/* Recommendations */}
-              <Card className="border-0 shadow-lg rounded-3xl bg-white">
-                <CardContent className="p-8">
-                  <h2 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6">
-                    Langkah-Langkah
-                  </h2>
-                  <RecommendationList steps={data.recommendations} />
+                <CardContent className="p-6 relative z-10">
+                  {/* Header Card dengan Ikon */}
+                  <div className="flex items-center gap-3 mb-5 border-b border-emerald-100/60 pb-4">
+                    <div className="p-2.5 bg-emerald-100 text-emerald-600 rounded-xl shadow-sm">
+                      <Info className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h2 className="text-sm font-extrabold text-slate-800 uppercase tracking-widest">
+                        Panduan Pengelolaan
+                      </h2>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        Rekomendasi tindakan untuk jenis sampah ini
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Konten Deskripsi */}
+                  <div className="bg-white rounded-2xl p-5 border border-emerald-50 shadow-sm relative">
+                    {/* Ikon kecil dekoratif */}
+                    <Sparkles className="w-4 h-4 text-emerald-300 absolute top-4 right-4 opacity-50" />
+
+                    <p className="text-slate-700 leading-relaxed text-[15px] whitespace-pre-line">
+                      {data.description}
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -164,6 +200,14 @@ export default function ResultClient({ id }: { id: string }) {
                   <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">
                     {data.label}
                   </h1>
+                  <div className="relative">
+                    {data.nilai_jual && (
+                      <p className="text-sm text-emerald-600 font-semibold absolute -top-11 right-2">
+                        💰 Estimasi nilai jual: Rp{" "}
+                        {new Intl.NumberFormat("id-ID").format(data.nilai_jual)}
+                      </p>
+                    )}
+                  </div>
 
                   {/* Confidence Indicator */}
                   <div className="space-y-2">
@@ -189,24 +233,35 @@ export default function ResultClient({ id }: { id: string }) {
             </Card>
 
             {/* Description */}
-            <Card className="border-0 shadow-lg rounded-3xl bg-white">
-              <CardContent className="p-6">
-                <h2 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">
-                  Deskripsi
-                </h2>
-                <p className="text-slate-700 leading-relaxed text-base">
-                  {data.description}
-                </p>
-              </CardContent>
-            </Card>
+            <Card className="border border-emerald-100 shadow-xl rounded-3xl bg-linear-to-br from-white to-emerald-50/40 relative overflow-hidden group">
+              {/* Efek glow dekoratif di sudut */}
+              <div className="absolute top-0 right-0 -mt-6 -mr-6 w-32 h-32 bg-emerald-200 rounded-full opacity-20 blur-3xl transition-all group-hover:opacity-40"></div>
 
-            {/* Recommendations */}
-            <Card className="border-0 shadow-lg rounded-3xl bg-white">
-              <CardContent className="p-6">
-                <h2 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">
-                  Langkah-Langkah
-                </h2>
-                <RecommendationList steps={data.recommendations} />
+              <CardContent className="p-6 relative z-10">
+                {/* Header Card dengan Ikon */}
+                <div className="flex items-center gap-3 mb-5 border-b border-emerald-100/60 pb-4">
+                  <div className="p-2.5 bg-emerald-100 text-emerald-600 rounded-xl shadow-sm">
+                    <Info className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h2 className="text-sm font-extrabold text-slate-800 uppercase tracking-widest">
+                      Panduan Pengelolaan
+                    </h2>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Rekomendasi tindakan untuk jenis sampah ini
+                    </p>
+                  </div>
+                </div>
+
+                {/* Konten Deskripsi */}
+                <div className="bg-white rounded-2xl p-5 border border-emerald-50 shadow-sm relative">
+                  {/* Ikon kecil dekoratif */}
+                  <Sparkles className="w-4 h-4 text-emerald-300 absolute top-4 right-4 opacity-50" />
+
+                  <p className="text-slate-700 leading-relaxed text-[15px] whitespace-pre-line">
+                    {data.description}
+                  </p>
+                </div>
               </CardContent>
             </Card>
 

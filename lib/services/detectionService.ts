@@ -1,16 +1,14 @@
 import { supabase } from "@/lib/supabase";
-import { Label, Recommendation } from "@/types";
 import { mapLabelToKategori } from "../utils";
 
-export async function getRecommendationByLabel(
-  label: Label | string,
-): Promise<Recommendation> {
+export async function getResultByLabel(label: string) {
   const { data, error } = await supabase
     .from("kategori")
     .select(
       `
       id_kategori,
       label_kelas,
+      nilai_jual,
       rekomendasi (
         isi_konten
       )
@@ -20,14 +18,15 @@ export async function getRecommendationByLabel(
     .single();
 
   if (error || !data) {
-    console.error("❌ Supabase error:", error);
-    return { description: "Rekomendasi tidak ditemukan", steps: [] };
+    console.error(error);
+    return null;
   }
 
-  const isiKonten =
-    (data.rekomendasi as { isi_konten: string }[])?.[0]?.isi_konten ?? "";
-
-  return { description: isiKonten, steps: [isiKonten] };
+  return {
+    label: data.label_kelas,
+    nilai_jual: data.nilai_jual,
+    description: data.rekomendasi?.[0]?.isi_konten ?? "",
+  };
 }
 
 export async function logDetectionHistory(params: {

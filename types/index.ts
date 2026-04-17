@@ -17,6 +17,7 @@ export type Label = "plastic" | "metal" | "paper" | "glass";
 export type Recommendation = {
   description: string;
   steps: string[];
+  nilai_jual?: number;
 };
 
 export type ApiResponse = [
@@ -33,6 +34,6 @@ export type DetectionResult = {
   label: string;
   confidence: number;
   description: string;
-  recycleSteps: string[];
   imageUrl: string;
+  nilaiJual?: number;
 };

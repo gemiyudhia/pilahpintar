@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { blobFromUrl, runDetection } from "@/lib/services/gradioService";
 import {
-  getRecommendationByLabel,
+  getResultByLabel,
   logDetectionHistory,
 } from "@/lib/services/detectionService";
 import { DetectionResult, Label } from "@/types";
@@ -30,7 +30,7 @@ export function useDetection() {
       const { imageUrl, detections } = await runDetection(blob);
 
       const topDetection = detections[0];
-      const recommendation = await getRecommendationByLabel(
+      const recommendation = await getResultByLabel(
         topDetection.label as Label,
       );
 
@@ -39,8 +39,7 @@ export function useDetection() {
         id: resultId,
         label: topDetection.label,
         confidence: topDetection.confidence,
-        description: recommendation.description,
-        recycleSteps: recommendation.steps,
+        description: recommendation?.description,
         imageUrl,
       };
 

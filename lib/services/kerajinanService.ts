@@ -4,7 +4,7 @@ export type Kerajinan = {
   id_kerajinan: number;
   nama_kerajinan: string;
   deskripsi: string | null;
-  gambar_url: string | null;
+  gambar_url: string | string[] | null;
   id_kategori: number;
 };
 
