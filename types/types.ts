@@ -33,3 +33,19 @@ export type Props = {
   kategori: Kategori[];
   data: KerajinanData;
 };
+
+
+export type NewGambarPayload = {
+  file: File;
+  preview: string;
+  uploading: boolean;
+  uploaded: boolean;
+  url: string | null;
+  error: string | null;
+};
+
+export type KerajinanForm = {
+  nama_kerajinan: string;
+  id_kategori: string;
+  deskripsi: string;
+};
