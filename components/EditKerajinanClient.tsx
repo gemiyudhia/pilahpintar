@@ -387,7 +387,7 @@ export default function EditKerajinanClient({ id, kategori, data }: Props) {
                 Tambah gambar baru
               </p>
               <p className="text-xs text-gray-400 mt-0.5">
-                JPG, PNG, WEBP · Maks. 5MB
+                JPG, PNG · Maks. 5MB
               </p>
               <input
                 ref={fileInputRef}

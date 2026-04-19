@@ -25,7 +25,7 @@ export function UploadGambarSection({
         Upload Gambar
       </h2>
       <p className="text-xs text-gray-400 mb-4 ml-7">
-        Bisa upload lebih dari satu gambar. Format: JPG, PNG, WEBP. Maks. 5MB
+        Bisa upload lebih dari satu gambar. Format: JPG, PNG Maks. 5MB
         per file.
       </p>
 
