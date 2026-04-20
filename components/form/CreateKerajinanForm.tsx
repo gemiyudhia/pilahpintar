@@ -10,6 +10,7 @@ import { ErrorAlert, SuccessAlert } from "../Alert";
 import { InfoDasarSection } from "../InfoDasarSection";
 import { UploadGambarSection } from "../UploadGambarSection";
 import { FormActions } from "../FormAction";
+import { createKerajinan, uploadGambar } from "@/app/actions/actions";
 
 const BACK_HREF = "/admin/dashboard/recommendations";
 
@@ -42,24 +43,18 @@ export default function CreateKerajinanForm({
     setError(null);
     setLoading(true);
 
-    const uploadedUrls = await uploadAll();
-
-    const { error: insertError } = await supabase.from("kerajinan").insert([
-      {
-        nama_kerajinan: form.nama_kerajinan,
-        id_kategori: parseInt(form.id_kategori),
-        deskripsi: form.deskripsi,
-        gambar_url: uploadedUrls.length > 0 ? uploadedUrls : null,
-      },
-    ]);
-
-    setLoading(false);
-
-    if (insertError) {
-      setError("Gagal menyimpan: " + insertError.message);
-      return;
+    // Upload semua gambar via server action
+    const uploadedUrls: string[] = [];
+    for (const item of gambarItems) {
+      const fd = new FormData();
+      fd.append("file", item.file);
+      const url = await uploadGambar(fd);
+      if (url) uploadedUrls.push(url);
     }
 
+    await createKerajinan(uploadedUrls, form);
+
+    setLoading(false);
     setSuccess(true);
     setTimeout(() => router.push(BACK_HREF), 1500);
   };

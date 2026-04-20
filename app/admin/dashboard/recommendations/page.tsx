@@ -57,7 +57,7 @@ export default async function RecommendationsPage(props: Props) {
       <div className="p-8">
         <DatabaseErrorBanner
           message={result.error}
-          retryHref="/admin/recommendations"
+          retryHref="/admin/dashboard/recommendations"
         />
       </div>
     );

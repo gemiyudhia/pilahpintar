@@ -33,7 +33,7 @@ export default function CreatePage() {
           </div>
         </div>
         <Link
-          href="/admin/dashboard/rekomendasi"
+          href="/admin/dashboard/recommendations"
           className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-green-600 transition-colors"
         >
           <svg
@@ -170,30 +170,30 @@ export default function CreatePage() {
 
           {/* Actions */}
           <div className="flex gap-3 justify-end">
-            <Link href="/admin/dashboard/rekomendasi">
+            <Link href="/admin/dashboard/recommendations">
               <Button variant="outline" type="button">
                 Batal
               </Button>
             </Link>
-            <Button
-              type="submit"
-              className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+              <Button
+                type="submit"
+                className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              Simpan Data Baru
-            </Button>
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                Simpan Data Baru
+              </Button>
           </div>
         </form>
       </div>

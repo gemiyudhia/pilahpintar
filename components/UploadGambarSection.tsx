@@ -25,9 +25,26 @@ export function UploadGambarSection({
         Upload Gambar
       </h2>
       <p className="text-xs text-gray-400 mb-4 ml-7">
-        Bisa upload lebih dari satu gambar. Format: JPG, PNG Maks. 5MB
-        per file.
+        Bisa upload lebih dari satu gambar. Format: JPG, PNG Maks. 5MB per file.
       </p>
+
+      {gambarItems.length > 0 && (
+        <>
+          <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {gambarItems.map((item, index) => (
+              <GambarPreviewItem
+                key={index}
+                item={item}
+                index={index}
+                onRemove={onRemove}
+              />
+            ))}
+          </div>
+          <p className="text-xs text-gray-400 mt-3">
+            {uploadedCount} dari {gambarItems.length} gambar siap
+          </p>
+        </>
+      )}
 
       <div
         onClick={() => fileInputRef.current?.click()}
@@ -61,24 +78,6 @@ export function UploadGambarSection({
           onChange={onFileChange}
         />
       </div>
-
-      {gambarItems.length > 0 && (
-        <>
-          <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {gambarItems.map((item, index) => (
-              <GambarPreviewItem
-                key={index}
-                item={item}
-                index={index}
-                onRemove={onRemove}
-              />
-            ))}
-          </div>
-          <p className="text-xs text-gray-400 mt-3">
-            {uploadedCount} dari {gambarItems.length} gambar siap
-          </p>
-        </>
-      )}
     </div>
   );
 }

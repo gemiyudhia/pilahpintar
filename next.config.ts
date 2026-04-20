@@ -22,6 +22,14 @@ const nextConfig: NextConfig = {
         hostname: "xmnttpdfnafjsrohaeey.supabase.co",
         pathname: "/storage/v1/object/public/**",
       },
+      {
+        protocol: "https",
+        hostname: "alekvois-pilahpintar-detection.hf.space",
+      },
+      {
+        protocol: "https",
+        hostname: "*.supabase.co",
+      },
     ],
   },
 };

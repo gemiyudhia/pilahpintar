@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { DeleteButton } from "./DeleteButton";
+import { DeleteKerajinanButton } from "./DeleteKerajinanButton";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -289,38 +291,19 @@ export default function RecommendationsClient({
   );
 }
 
-// ─── Delete Buttons ───────────────────────────────────────────────────────────
+// function DeleteKerajinanButton({ id, title }: { id: number; title: string }) {
+//   const handleDelete = async () => {
+//     if (!confirm(`Hapus kerajinan "${title}"?`)) return;
+//     await fetch(`/api/kerajinan/${id}`, { method: "DELETE" });
+//     window.location.reload();
+//   };
 
-function DeleteButton({ id, title }: { id: number; title: string }) {
-  const handleDelete = async () => {
-    if (!confirm(`Hapus kategori "${title}"?`)) return;
-    await fetch(`/api/kategori/${id}`, { method: "DELETE" });
-    window.location.reload();
-  };
-
-  return (
-    <button
-      className="p-2 rounded hover:bg-red-100 text-red-600"
-      onClick={handleDelete}
-    >
-      <Trash2 size={14} />
-    </button>
-  );
-}
-
-function DeleteKerajinanButton({ id, title }: { id: number; title: string }) {
-  const handleDelete = async () => {
-    if (!confirm(`Hapus kerajinan "${title}"?`)) return;
-    await fetch(`/api/kerajinan/${id}`, { method: "DELETE" });
-    window.location.reload();
-  };
-
-  return (
-    <button
-      className="p-2 rounded hover:bg-red-100 text-red-600"
-      onClick={handleDelete}
-    >
-      <Trash2 size={14} />
-    </button>
-  );
-}
+//   return (
+//     <button
+//       className="p-2 rounded hover:bg-red-100 text-red-600"
+//       onClick={handleDelete}
+//     >
+//       <Trash2 size={14} />
+//     </button>
+//   );
+// }

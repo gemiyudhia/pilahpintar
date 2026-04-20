@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { blobFromUrl, runDetection } from "@/lib/services/gradioService";
-import {
-  getResultByLabel,
-  logDetectionHistory,
-} from "@/lib/services/detectionService";
+import { getResultByLabel } from "@/lib/services/detectionService";
 import { DetectionResult, Label } from "@/types";
 import { toast } from "sonner";
+import { logDetectionHistory } from "@/app/actions/actions";
 
 export function useDetection() {
   const [preview, setPreview] = useState<string | null>(null);

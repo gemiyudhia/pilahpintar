@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Download, Eye, Filter } from "lucide-react";
 import { SearchInput } from "@/components/admin/SearchInput";
+import { CetakLaporanButton } from "@/components/CetakLaporanButton";
 
 export const dynamic = "force-dynamic";
 
@@ -60,9 +61,7 @@ export default async function HistoryPage(props: Props) {
             Monitoring aktivitas deteksi sampah yang masuk.
           </p>
         </div>
-        <Button variant="outline">
-          <Download className="w-4 h-4 mr-2" /> Cetak Laporan
-        </Button>
+        <CetakLaporanButton logs={logs}>Cetak Laporan</CetakLaporanButton>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4 bg-white p-4 rounded-xl shadow-sm border border-gray-100">

@@ -28,22 +28,3 @@ export async function getResultByLabel(label: string) {
     description: data.rekomendasi?.[0]?.isi_konten ?? "",
   };
 }
-
-export async function logDetectionHistory(params: {
-  imageUrl: string;
-  confidence: number;
-  label: string;
-}): Promise<void> {
-  const { error } = await supabase.from("log_riwayat").insert([
-    {
-      lokasi_gambar: params.imageUrl,
-      skor_akurasi: params.confidence,
-      label_deteksi: params.label,
-      id_kategori: mapLabelToKategori(params.label),
-    },
-  ]);
-
-  if (error) {
-    console.error("❌ Failed to log detection history:", error);
-  }
-}
