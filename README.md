@@ -144,10 +144,3 @@ Kontribusi sangat disambut! Berikut cara berkontribusi:
 ## 📄 Lisensi
 
 Proyek ini dilisensikan di bawah [MIT License](LICENSE).
-
----
-
-## 👤 Author
-
-**Gemi Yudhia**
-- GitHub: [@gemiyudhia](https://github.com/gemiyudhia)
