@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -31,7 +30,6 @@ const formSchema = z.object({
 });
 
 export function LoginForm() {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -48,19 +46,15 @@ export function LoginForm() {
     setError("");
 
     try {
-      const res = await signIn("credentials", {
+      // ✅ gunakan redirect bawaan NextAuth (fix utama)
+      await signIn("credentials", {
         username: values.username,
         password: values.password,
-        redirect: false,
+        redirect: true,
+        callbackUrl: "/admin/dashboard",
       });
 
-      if (res?.error) {
-        setError("Username atau password salah.");
-        setIsLoading(false);
-      } else {
-        router.push("/admin/dashboard");
-        router.refresh();
-      }
+      // ❗ tidak perlu router.push / refresh lagi
     } catch (error) {
       setError("Terjadi kesalahan pada server.");
       setIsLoading(false);
@@ -90,6 +84,7 @@ export function LoginForm() {
                 <p>{error}</p>
               </div>
             )}
+
             <FormField
               control={form.control}
               name="username"
@@ -109,6 +104,7 @@ export function LoginForm() {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="password"
@@ -129,6 +125,7 @@ export function LoginForm() {
                 </FormItem>
               )}
             />
+
             <div className="pt-4">
               <Button
                 type="submit"
