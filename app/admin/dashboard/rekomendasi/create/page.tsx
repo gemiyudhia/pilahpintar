@@ -117,27 +117,7 @@ export default function CreatePage() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Estimasi Nilai Jual (Rp/kg){" "}
-                  <span className="text-red-500">*</span>
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-2.5 text-gray-500 text-sm">
-                    Rp
-                  </span>
-                  <input
-                    name="nilai_jual"
-                    type="number"
-                    placeholder="0"
-                    className="w-full border border-gray-200 p-2 pl-10 rounded-lg focus:ring-2 focus:ring-green-500 outline-none text-sm"
-                    required
-                  />
-                </div>
-                <p className="text-xs text-gray-400 mt-1">
-                  Harga estimasi bank sampah per kilogram.
-                </p>
-              </div>
+              
             </div>
           </div>
 

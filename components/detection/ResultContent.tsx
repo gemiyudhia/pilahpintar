@@ -130,25 +130,7 @@ export default function ResultClient({ id }: { id: string }) {
                       </div>
                     </div>
 
-                    {/* Nilai Jual */}
-                    {data.nilaiJual !== undefined && data.nilaiJual > 0 && (
-                      <div className="pt-1 border-t border-slate-100">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Tag className="w-4 h-4 text-emerald-500" />
-                            <span className="text-sm font-semibold text-slate-600 uppercase tracking-wider">
-                              Estimasi Nilai Jual
-                            </span>
-                          </div>
-                          <span className="text-2xl font-bold text-emerald-600">
-                            {formatRupiah(data.nilaiJual)}
-                          </span>
-                        </div>
-                        <p className="text-xs text-slate-400 mt-1 ml-6">
-                          Harga perkiraan per kilogram
-                        </p>
-                      </div>
-                    )}
+                 
                   </div>
                 </CardContent>
               </Card>
@@ -218,25 +200,7 @@ export default function ResultClient({ id }: { id: string }) {
                     </div>
                   </div>
 
-                  {/* Nilai Jual */}
-                  {data.nilaiJual !== undefined && data.nilaiJual > 0 && (
-                    <div className="pt-1 border-t border-slate-100">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Tag className="w-4 h-4 text-emerald-500" />
-                          <span className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                            Estimasi Nilai Jual
-                          </span>
-                        </div>
-                        <span className="text-xl font-bold text-emerald-600">
-                          {formatRupiah(data.nilaiJual)}
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-400 mt-1 ml-6">
-                        Harga perkiraan per kilogram
-                      </p>
-                    </div>
-                  )}
+                
                 </div>
               </CardContent>
             </Card>

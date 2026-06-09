@@ -150,7 +150,6 @@ export default function RecommendationsClient({
                 <th className="p-3 text-left">No</th>
                 <th className="p-3 text-left">Kategori</th>
                 <th className="p-3 text-left">Jenis Material</th>
-                <th className="p-3 text-left">Nilai Jual</th>
                 <th className="p-3 text-left">Label YOLO</th>
                 <th className="p-3 text-right">Aksi</th>
               </tr>
@@ -175,10 +174,6 @@ export default function RecommendationsClient({
                     </td>
 
                     <td className="p-3">{item.jenis_material}</td>
-
-                    <td className="p-3">
-                      Rp {item.nilai_jual?.toLocaleString("id-ID") ?? "-"}
-                    </td>
 
                     <td className="p-3 font-mono text-xs">
                       {item.label_kelas}

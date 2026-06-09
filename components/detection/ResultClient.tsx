@@ -116,16 +116,7 @@ export default function ResultClient({ id }: { id: string }) {
                     <h1 className="text-4xl font-bold text-slate-900 leading-tight">
                       {data.label}
                     </h1>
-                    <div className="relative">
-                      {data.nilai_jual && (
-                        <p className="text-sm text-emerald-600 font-semibold absolute top-1 right-25">
-                          💰 Estimasi nilai jual: Rp{" "}
-                          {new Intl.NumberFormat("id-ID").format(
-                            data.nilai_jual,
-                          )}
-                        </p>
-                      )}
-                    </div>
+                    
                     {/* Confidence Indicator */}
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
@@ -200,14 +191,7 @@ export default function ResultClient({ id }: { id: string }) {
                   <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">
                     {data.label}
                   </h1>
-                  <div className="relative">
-                    {data.nilai_jual && (
-                      <p className="text-sm text-emerald-600 font-semibold absolute -top-11 right-2">
-                        💰 Estimasi nilai jual: Rp{" "}
-                        {new Intl.NumberFormat("id-ID").format(data.nilai_jual)}
-                      </p>
-                    )}
-                  </div>
+                  
 
                   {/* Confidence Indicator */}
                   <div className="space-y-2">

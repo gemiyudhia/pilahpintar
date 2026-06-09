@@ -139,26 +139,7 @@ export default async function EditPage(props: PageProps) {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Estimasi Nilai Jual (Rp/kg)
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-2.5 text-gray-500 text-sm">
-                    Rp
-                  </span>
-                  <input
-                    name="nilai_jual"
-                    type="number"
-                    defaultValue={data.nilai_jual?.toString()}
-                    className="w-full border border-gray-200 p-2 pl-10 rounded-lg focus:ring-2 focus:ring-green-500 outline-none text-sm"
-                    required
-                  />
-                </div>
-                <p className="text-xs text-gray-400 mt-1">
-                  Sesuaikan dengan harga pasar pengepul terkini.
-                </p>
-              </div>
+              
             </div>
           </div>
 
