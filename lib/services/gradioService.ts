@@ -1,8 +1,4 @@
-import { ApiResponse, Detection } from "@/types";
-import { Client } from "@gradio/client";
-import { toast } from "sonner";
-
-const GRADIO_SPACE = "alekvois/pilahpintar-detection";
+import { Detection } from "@/types";
 
 type GradioResult = {
   imageUrl: string;
@@ -10,24 +6,25 @@ type GradioResult = {
 };
 
 export async function runDetection(imageBlob: Blob): Promise<GradioResult> {
-  const client = await Client.connect(GRADIO_SPACE);
-  const result = await client.predict("/predict", { image: imageBlob });
+  const formData = new FormData();
 
-  const [imageResult, json] = result.data as ApiResponse;
+  formData.append("image", imageBlob, "image.jpg");
 
-  if (!json || json.status !== "success") {
-    toast.error(json?.message || "Deteksi Gagal");
-    throw new Error(json?.message || "Deteksi Gagal");
+  const response = await fetch("/api/detect", {
+    method: "POST",
+    body: formData,
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error || "Deteksi gagal");
   }
 
-  if (!Array.isArray(json.data) || json.data.length === 0) {
-    toast.error("Tidak Ada Objek Sampah Yang Terdeteksi");
-    throw new Error("Tidak ada objek terdeteksi");
-  }
-
-  const imageUrl = typeof imageResult === "object" ? imageResult.url : "";
-
-  return { imageUrl, detections: json.data };
+  return {
+    imageUrl: data.imageUrl,
+    detections: data.detections,
+  };
 }
 
 export async function blobFromUrl(url: string): Promise<Blob> {

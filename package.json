@@ -34,7 +34,7 @@
     "zod": "^4.3.5"
   },
   "devDependencies": {
-    "@gradio/client": "^2.1.0",
+    "@gradio/client": "^2.3.0",
     "@prisma/client": "^5.10.2",
     "@tailwindcss/postcss": "^4",
     "@types/bcrypt": "^6.0.0",
